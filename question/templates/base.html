@@ -66,13 +66,27 @@
         <li><a href="#">Articles</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-       <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> signup</a></li>
+       {% if user.is_authenticated %}
+       <li><a href="#"><span class="glyphicon glyphicon-user"></span> Hello {{ user.username }} </a></li>
+        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> profile </a></li>
+        <li><a href= "{% url 'logout' %}"?next ={{ request.path }} ><span class="glyphicon glyphicon-log-out"></span> logout</a></li>
+        </ul>
+        </div>
+        </div>
+        </nav>
+        {% endif %}
+
+
+        {% if not user.is_authenticated %}
+       <li><a href="{% url 'signup' %}"><span class="glyphicon glyphicon-log-in"></span> signup</a></li>
         <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+
+      
       </ul>
     </div>
   </div>
 </nav>
-  
+{% endif %}  
 <div class="container-fluid text-center">    
   <div class="row content">
     <div class="col-sm-2 sidenav">
@@ -81,7 +95,7 @@
       <p><a href="#">Link</a></p>
     </div>
     <div class="col-sm-8 text-left"> 
-      <h1>Welcome to Quora clone . </h1>
+      <h1>Welcome to TN students  </h1>
       {% block content %}
       {% endblock %}
       

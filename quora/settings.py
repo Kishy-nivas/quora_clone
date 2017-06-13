@@ -32,13 +32,14 @@ ALLOWED_HOSTS = ['127.0.0.1', 'auapp.pythonanywhere.com']
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
+   
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'question'
+    'question',
+    'django.contrib.admin',
 ]
 
 MIDDLEWARE = [
@@ -120,3 +121,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+LOGIN_REDIRECT_URL = '/'
