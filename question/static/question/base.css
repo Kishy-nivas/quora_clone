@@ -1,0 +1,7 @@
+.cent{
+    left: 30%;
+    transform: translateX(-30%);
+}
+li a{
+	color : green;
+}

@@ -3,4 +3,5 @@ from django.http import HttpResponse
 
 # Create your views here.
 def index(request):
-	return HttpResponse("Index page to be implemented soon ")
+	help_text=  'Site under construction '
+	return render(request,'question/index.html',{'text':help_text})
