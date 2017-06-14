@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% if userprofile %}
+	<small> {{ userprofile.username }} </small>
+	<small> {{ userprofile.user.email }}</small>
+{% endblock %}

@@ -62,13 +62,14 @@
       <ul class="nav navbar-nav">
         <li class="active"><a href="/">Home</a></li>
         <li><a href="#">About</a></li>
-        <li><a href="#">Question and Answers </a></li>
+        <li><a href="{% url 'question-list' %}">Question and Answers </a></li>
         <li><a href="#">Articles</a></li>
+        <li> <a href ="{% url 'ask' %}"> Ask Question </a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
        {% if user.is_authenticated %}
-       <li><a href="#"><span class="glyphicon glyphicon-user"></span> Hello {{ user.username }} </a></li>
-        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> profile </a></li>
+       <li><a href="#"><span class="glyphicon glyphicon-user"></span> Hello {{ user.username }}</a></li>
+        <li><a href="{% url 'profile-detail' user.pk %}"><span class="glyphicon glyphicon-log-in"></span> profile </a></li>
         <li><a href= "{% url 'logout' %}"?next ={{ request.path }} ><span class="glyphicon glyphicon-log-out"></span> logout</a></li>
         </ul>
         </div>
