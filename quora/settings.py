@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'question',
-    'markdown_deux',
     'django.contrib.admin',
 ]
 
