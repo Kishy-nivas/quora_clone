@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style type="text/css">
+	
+</style>
+{% if question_detail %}
+ Question :
+ <h4> {{ question_detail.title }} </h4>
+ {{ question_detail.get_description | escape }} 
+
+{% else %}
+<small > an error occured </small>
+
+{% endif %}
+
+
+{% endblock %}

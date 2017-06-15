@@ -72,26 +72,29 @@ class question_list(generic.ListView):
 
 
 @login_required
-def answer(request):
+def answer(request,pk):
+    question = Question.objects.get(pk= pk)
+    form = AnswerForm()
     if request.method == 'POST':
         form = AnswerForm(request.POST)
         if form.is_valid():
-            user = request.user
-            answer = Answer()
+            answer = AnswerForm()
             answer.user = request.user
-            answer.question = form.cleaned_data.get('question')
+            answer.question = question
             answer.description = form.cleaned_data.get('description')
             answer.save()
             return redirect('/')
         else:
-            question = form.cleaned_data.get('question')
-            return render(request, 'question/question.html', {
-                'question': question,
-                'form': form
+            return render(request, 'question/answer.html', {
+                'form': form ,'question' : question , 'msg' : "An error occured please check the fields "
             })
     else:
-        return redirect('/')
+        return render(request ,'question/answer.html',{'form':form,'question' : question })
 
+class question_detail(generic.DetailView):
+    model = Question
+    context_object_name = "question_detail"
+    template_name = "question/question-detail.html"
 
 
 

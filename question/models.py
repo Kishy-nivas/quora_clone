@@ -1,7 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
+from markdown import markdown
+from django.utils.safestring import mark_safe
 # Create your models here.
+
  
 class userprofile(models.Model):
 	user = models.OneToOneField(User)
@@ -51,6 +54,10 @@ class Question(models.Model):
 		tag_list = tags.split(' ')
 		for tag in tag_list:
 			 t, created = Tag.objects.get_or_create(tag=tag.lower(), question=self)
+	
+	def get_description(self):
+		return mark_safe (markdown(self.description))
+
 
 
 class Answer(models.Model):
@@ -71,7 +78,7 @@ class Answer(models.Model):
  		return self.description
 
 class Tag(models.Model):
-    tag = models.CharField(max_length=50)
+    tag = models.CharField(max_length=20)
     question = models.ForeignKey(Question)
 
     class Meta:

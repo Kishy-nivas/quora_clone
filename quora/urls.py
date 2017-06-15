@@ -21,6 +21,7 @@ urlpatterns = [
     url(r'^$',RedirectView.as_view(url ='/qa/',permanent=True)),
     url(r'^qa/',include('question.urls')),
     url(r'^accounts/',include('django.contrib.auth.urls')),
+    url(r'^tinymce/', include('tinymce.urls')),
 
 
 ]

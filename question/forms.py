@@ -5,7 +5,6 @@ from .models import Question,Answer
 
 
 
-
 class SignUpForm(forms.ModelForm):
 	username = forms.CharField(widget = forms.TextInput(attrs = {'class':'form-control'}), 
 		max_length = 20,
@@ -34,11 +33,11 @@ class SignUpForm(forms.ModelForm):
 
 class QuestionForm(forms.ModelForm):
 	title = forms.CharField(widget= forms.TextInput(attrs={'class':'form-control'}),
-		min_length =25,
+		min_length =10,
 		required = True)
-	description = forms.CharField(widget= forms.Textarea(attrs={'class':'form-control'}),
-	min_length =100,
-	required = True )
+	description = forms.CharField(widget=forms.Textarea(attrs= {'class':'form-control'}),
+		min_length =10,
+		required= True)
 	tags = forms.CharField(widget= forms.TextInput(attrs={'class':'form-control'}),
 		min_length = 6,
 		required =True,
@@ -50,7 +49,7 @@ class QuestionForm(forms.ModelForm):
 
 class AnswerForm(forms.ModelForm):
     question = forms.ModelChoiceField(widget=forms.HiddenInput(),
-                                      queryset=Question.objects.all())
+                                      queryset=Question.objects.all(), required= False )
     description = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': '4'}),
         max_length=2000)
 

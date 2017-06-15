@@ -1,7 +1,37 @@
 {% extends 'base.html' %}
-{% block content %}
-<form name ="question-form" method="POST" action ="{% url 'ask' %}">{% csrf_token %}
-	{{ form.as_p }}
-	<input type ="submit" value =" post">
-</form>
+	
+{% block head %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
 {% endblock %}
+
+{% block content %}
+<body>
+<form name ="question-form" method="POST" action ="{% url 'ask' %}">{% csrf_token %}
+ Question  <h4> {{ question.title }} </h4>  
+	{{ form.title }} 
+	<br/>
+	<br/>
+  
+  <small> To insert source code, please use <a href = "https://gist.github.com">This link to generate gist and embed the javascript </a></small>
+  <br/>
+  <br/>
+  <br/>
+ <small> Description </small> <input type ="text" id ="description" name ="description" value = "">
+
+<h4> Tags </h4>
+{{ form.tags }}
+ <input type ="submit" value ="post">
+</form>
+<script>
+var simplemde = new SimpleMDE({ element: document.getElementById("description") });
+</script>
+{% if form.errors %}
+{{ form.errors }}
+{% endif %}
+
+
+
+
+{% endblock %}
+		
