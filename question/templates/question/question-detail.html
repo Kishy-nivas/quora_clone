@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
 <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
 {% endblock %}
-
+{% load humanize %}
 {% block content %}
 {% if question  %}
 <h4><small> {{ question.title }} </small></h4>
@@ -14,9 +14,9 @@
 {% endif %}
 {% for answer in question.get_answers %}
 {% if user.is_authenticated %}
-<small> <a href  ="{% url 'profile-detail' user.pk %}">{{ answer.user.username }} </a> says : at {{ answer.updated_at }}</small>
+<small> <a href  ="{% url 'profile-detail' user.pk %}">{{ answer.user.username }} </a> says : at {{ answer.updated_at|naturaltime }}</small>
 {% else %}
-<small> <a href  ="{% url 'login' %}">{{ answer.user.username }} </a> says : at {{ answer.updated_at }}</small>
+<small> <a href  ="{% url 'login' %}">{{ answer.user.username }} </a> says : at {{ answer.updated_at|naturaltime }}</small>
 {% endif %}
  {{ answer.get_description|safe }}
 <hr>
@@ -28,7 +28,7 @@
 <br/>
 	<br/>
   
-  <small> To insert source code, please use <a href = "https://gist.github.com">This link to generate gist and embed the javascript </a></small>
+  <small> To insert source code, please use <a href = "https://gist.github.com">This link to generate gist and embed the javascript </a>or format it with four spaces </small>
   <br/>
   <br/>
   <br/>

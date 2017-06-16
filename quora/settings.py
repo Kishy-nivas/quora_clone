@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'question',
     'django.contrib.admin',
+    'django.contrib.humanize',
 ]
 
 MIDDLEWARE = [

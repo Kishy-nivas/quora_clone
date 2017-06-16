@@ -47,65 +47,67 @@ class profiledetail(generic.DetailView):
    
 @login_required
 def ask(request):
-    if request.method == 'POST':
-        form = QuestionForm(request.POST)
-        if form.is_valid():
-            question = Question()
-            question.user = request.user
-            question.title = form.cleaned_data.get('title')
-            question.description = form.cleaned_data.get('description')
-            question.save()
-            tags = form.cleaned_data.get('tags')
-            question.create_tags(tags)
-            return redirect('question-detail',pk= question.pk)
+	if request.method == 'POST':
+		form = QuestionForm(request.POST)
+		if form.is_valid():
+			question = Question()
+			question.user = request.user
+			question.title = form.cleaned_data.get('title')
+			question.description = form.cleaned_data.get('description')
+			question.save()
+			tags = form.cleaned_data.get('tags')
+			question.create_tags(tags)
+			return redirect('question-detail',pk= question.pk)
 
-        else:
-            return render(request, 'question/ask.html', {'form': form})
+		else:
+			return render(request, 'question/ask.html', {'form': form})
 
-    else:
-        form = QuestionForm()
+	else:
+		form = QuestionForm()
 
-    return render(request, 'question/ask.html', {'form': form})
+	return render(request, 'question/ask.html', {'form': form})
 
 class question_list(generic.ListView):
 	model = Question
 	template_name = "question/questionlist.html"
 	context_object_name= "question_list"
+	paginate_by = 8
+    
 
 
 
 
 @login_required
 def answer(request):
-    if request.method == 'POST':
-        form = AnswerForm(request.POST)
-        if form.is_valid():
-            user = request.user
-            answer = Answer()
-            answer.user = request.user
-            answer.question = form.cleaned_data.get('question')
-            answer.description = form.cleaned_data.get('description')
-            answer.save()
-            id = answer.question.pk
-            return redirect('question-detail',pk =id )
+	if request.method == 'POST':
+		form = AnswerForm(request.POST)
+		if form.is_valid():
+			user = request.user
+			answer = Answer()
+			answer.user = request.user
+			answer.question = form.cleaned_data.get('question')
+			answer.description = form.cleaned_data.get('description')
+			answer.save()
+			id = answer.question.pk
+			return redirect('question-detail',pk =id )
 
-        else:
-            question = form.cleaned_data.get('question')
-            return render(request, 'question/question-detail.html', {
-                'question': question,
-                'form': form
-            })
-    else:
-        return render(request ,'question/answer.html',{'form':form,'question' : question })
+		else:
+			question = form.cleaned_data.get('question')
+			return render(request, 'question/question-detail.html', {
+				'question': question,
+				'form': form
+			})
+	else:
+		return render(request ,'question/answer.html',{'form':form,'question' : question })
 
 
 def question_detail(request,pk):
-    question = get_object_or_404(Question,pk=pk)
-    form = AnswerForm(initial={'question':question})
-    return render(request,'question/question-detail.html',{
-        'question' :question,
-        'form' : form
-        })
+	question = get_object_or_404(Question,pk=pk)
+	form = AnswerForm(initial={'question':question})
+	return render(request,'question/question-detail.html',{
+		'question' :question,
+		'form' : form
+		})
 
 
 

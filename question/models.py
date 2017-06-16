@@ -44,7 +44,7 @@ class Question(models.Model):
 	class Meta:
 		verbose_name='Question'
 		verbose_name_plural ='Questions'
-		ordering =('-updated_at','-created_at',)
+		ordering =('-created_at',)
 	
 
 	def __str__(self):
