@@ -13,8 +13,14 @@
 <small > an error occured </small>
 {% endif %}
 {% for answer in question.get_answers %}
+{% if user.is_authenticated %}
 <small> <a href  ="{% url 'profile-detail' user.pk %}">{{ answer.user.username }} </a> says : at {{ answer.updated_at }}</small>
- <pre>{{ answer.get_description|safe }}</pre>
+{% else %}
+<small> <a href  ="{% url 'login' %}">{{ answer.user.username }} </a> says : at {{ answer.updated_at }}</small>
+{% endif %}
+ {{ answer.get_description|safe }}
+}
+}
 <hr>
 
 {% endfor %}
