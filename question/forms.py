@@ -46,16 +46,15 @@ class QuestionForm(forms.ModelForm):
 		model = Question
 		fields =['title','description','tags',]
 
-
 class AnswerForm(forms.ModelForm):
-    question = forms.ModelChoiceField(widget=forms.HiddenInput(),
-                                      queryset=Question.objects.all(), required= False )
-    description = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': '4'}),
-        max_length=2000)
 
-    class Meta:
-        model = Answer
-        fields = ['question', 'description']
+	question = forms.ModelChoiceField(widget=forms.HiddenInput(),
+                                      queryset=Question.objects.all())
+	description = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': '4'}),max_length=2000)
+
+	class Meta:
+		model = Answer
+		fields = ['description']
 
 
 

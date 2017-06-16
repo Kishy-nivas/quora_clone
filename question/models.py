@@ -20,9 +20,9 @@ class userprofile(models.Model):
 		return self.user.username
 
 	def get_absolute_url(self):
-		self
+		pass
 
-    
+	
 def create_userprofile(sender ,**kwargs):
 	user = kwargs["instance"]
 	if kwargs["created"]:
@@ -45,51 +45,60 @@ class Question(models.Model):
 		verbose_name='Question'
 		verbose_name_plural ='Questions'
 		ordering =('-updated_at','-created_at',)
+	
 
 	def __str__(self):
-		return self.title 
+		return self.title
 
 	def create_tags(self, tags):
 		tags= tags.strip()
 		tag_list = tags.split(' ')
 		for tag in tag_list:
-			 t, created = Tag.objects.get_or_create(tag=tag.lower(), question=self)
-	
+			t,created = Tag.objects.get_or_create(tag=tag.lower(), question=self)
+			
 	def get_description(self):
-		return mark_safe (markdown(self.description))
+		return markdown(self.description)
+
+	def get_answers(self):
+		return Answer.objects.filter(question=self)
+		
+	def answercount(self):
+	    return Answer.objects.filter(question=self).count()			
+
 
 
 
 class Answer(models.Model):
- 	user = models.ForeignKey(User)
- 	question = models.ForeignKey(Question)
- 	description= models.TextField(max_length= 2000)
- 	created_at = models.DateTimeField(auto_now_add=True)
- 	updated_at =models.DateTimeField(auto_now_add=True)
- 	is_accepted = models.BooleanField(default = 0)
- 	votes = models.IntegerField(default =0)
+	user = models.ForeignKey(User)
+	question = models.ForeignKey(Question)
+	description= models.TextField(max_length= 2000)
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at =models.DateTimeField(auto_now_add=True)
+	is_accepted = models.BooleanField(default = 0)
+	votes = models.IntegerField(default =0)
 
- 	class Meta:
- 		verbose_name='Answer '
- 		verbose_name_plural='Answers'
- 		ordering =('-votes','-is_accepted','-created_at',)
+	class Meta:
+		verbose_name='Answer '
+		verbose_name_plural='Answers'
+		ordering =('-votes','-is_accepted','-created_at',)
 
- 	def __str__(self):
- 		return self.description
+	def __str__(self):
+		return self.description
+	def get_description(self):
+		return markdown(self.description)
+
 
 class Tag(models.Model):
-    tag = models.CharField(max_length=20)
-    question = models.ForeignKey(Question)
+	tag = models.CharField(max_length=20)
+	question = models.ForeignKey(Question)
 
-    class Meta:
-        verbose_name = 'Tag'
-        verbose_name_plural = 'Tags'
-        unique_together = (('tag', 'question'),)
-        index_together = [['tag', 'question'], ]
+	class Meta:
+		verbose_name = 'Tag'
+		verbose_name_plural = 'Tags'
+		unique_together = (('tag', 'question'),)
+		index_together = [['tag', 'question'], ]
 
-    def __str__(self):
-        return self.tag
+	def __str__(self):
+		return self.tag
 
 
-
-    

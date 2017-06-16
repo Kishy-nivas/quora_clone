@@ -5,9 +5,11 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login
 from django.views import generic 
 from django import forms
-from .models import userprofile,Question
+from .models import userprofile,Question,Answer
 from django.contrib.auth.decorators import login_required
-
+from django.shortcuts import get_object_or_404
+from django.urls import reverse
+from django.http import HttpResponseRedirect
 
 # Create your views here.
 def index(request):
@@ -55,7 +57,7 @@ def ask(request):
             question.save()
             tags = form.cleaned_data.get('tags')
             question.create_tags(tags)
-            return redirect('/')
+            return redirect('question-detail',pk= question.pk)
 
         else:
             return render(request, 'question/ask.html', {'form': form})
@@ -71,30 +73,40 @@ class question_list(generic.ListView):
 	context_object_name= "question_list"
 
 
+
+
 @login_required
-def answer(request,pk):
-    question = Question.objects.get(pk= pk)
-    form = AnswerForm()
+def answer(request):
     if request.method == 'POST':
         form = AnswerForm(request.POST)
         if form.is_valid():
-            answer = AnswerForm()
+            user = request.user
+            answer = Answer()
             answer.user = request.user
-            answer.question = question
+            answer.question = form.cleaned_data.get('question')
             answer.description = form.cleaned_data.get('description')
             answer.save()
-            return redirect('/')
+            id = answer.question.pk
+            return redirect('question-detail',pk =id )
+
         else:
-            return render(request, 'question/answer.html', {
-                'form': form ,'question' : question , 'msg' : "An error occured please check the fields "
+            question = form.cleaned_data.get('question')
+            return render(request, 'question/question-detail.html', {
+                'question': question,
+                'form': form
             })
     else:
         return render(request ,'question/answer.html',{'form':form,'question' : question })
 
-class question_detail(generic.DetailView):
-    model = Question
-    context_object_name = "question_detail"
-    template_name = "question/question-detail.html"
+
+def question_detail(request,pk):
+    question = get_object_or_404(Question,pk=pk)
+    form = AnswerForm(initial={'question':question})
+    return render(request,'question/question-detail.html',{
+        'question' :question,
+        'form' : form
+        })
+
 
 
 

@@ -3,11 +3,9 @@
  <h4> Question list </h4>
  {% if question_list %}
  {% for question in question_list %}
- <h3> <a href ="{% url 'question-detail' question.pk %}">{{ question.title }} </a></h3> <small> by <a href ="{% url 'profile-detail' question.user.pk %}" >{{ question.user.username }}</a></small>
- <h5> {% if question.answer_set.answer %} {{ question.answer_set.answer }} {% else %} No answers {% endif %}</h5>
- <small> <a href ="{% url 'answer' question.pk   %}"> Answer </a></small>
- {% endfor %}
-{% else %}
-<h3> No questions to display so far </h3>
+ <h3> <a href ="{% url 'question-detail' question.pk %}">{{ question.title }}</a><small> Answers({{ question.answercount }})</small></h3> <small> by <a href ="{% url 'profile-detail' question.user.pk %}" >{{ question.user.username }} at {{ question.updated_at }}</a> </small>
+ <hr>
+ <hr>
+{% endfor %}
 {% endif %}
 {% endblock %}

@@ -1,19 +1,40 @@
 {% extends 'base.html' %}
+{% block head %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+{% endblock %}
 
 {% block content %}
-
-<style type="text/css">
-	
-</style>
-{% if question_detail %}
- Question :
- <h4> {{ question_detail.title }} </h4>
- {{ question_detail.get_description | escape }} 
-
+{% if question  %}
+<h4><small> {{ question.title }} </small></h4>
+  {{ question.get_description|safe }} 
 {% else %}
+
 <small > an error occured </small>
-
 {% endif %}
+{% for answer in question.get_answers %}
+<small> <a href  ="{% url 'profile-detail' user.pk %}">{{ answer.user.username }} </a> says : at {{ answer.updated_at }}</small>
+ <h5>{{ answer.get_description |safe }}</h5>
+<hr>
 
+{% endfor %}
+
+<form name ="answerform" action ="{% url 'answer' %}" method ="POST">{% csrf_token %}
+{{ form.question }}
+<br/>
+	<br/>
+  
+  <small> To insert source code, please use <a href = "https://gist.github.com">This link to generate gist and embed the javascript </a></small>
+  <br/>
+  <br/>
+  <br/>
+ <small> Description </small> <input type ="text" id ="description" name ="description" value = "">
+
+
+<input type ="submit" value ="answer" >
+</form>
+<script>
+var simplemde = new SimpleMDE({ element: document.getElementById("description") });
+</script>
 
 {% endblock %}
