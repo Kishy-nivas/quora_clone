@@ -14,7 +14,7 @@
 {% endif %}
 {% for answer in question.get_answers %}
 <small> <a href  ="{% url 'profile-detail' user.pk %}">{{ answer.user.username }} </a> says : at {{ answer.updated_at }}</small>
- <h5>{{ answer.get_description |safe }}</h5>
+ <pre>{{ answer.get_description|safe }}</pre>
 <hr>
 
 {% endfor %}
@@ -28,7 +28,7 @@
   <br/>
   <br/>
   <br/>
- <small> Description </small> <input type ="text" id ="description" name ="description" value = "">
+ <small> Description </small> <textarea id ="description" name ="description" value = "" wrap="hard"> </textarea> 
 
 
 <input type ="submit" value ="answer" >
