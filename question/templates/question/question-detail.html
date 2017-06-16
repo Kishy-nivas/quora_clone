@@ -19,8 +19,6 @@
 <small> <a href  ="{% url 'login' %}">{{ answer.user.username }} </a> says : at {{ answer.updated_at }}</small>
 {% endif %}
  {{ answer.get_description|safe }}
-}
-}
 <hr>
 
 {% endfor %}
