@@ -25,7 +25,7 @@ SECRET_KEY = '=kr$_nz*lj$6me^pxz!d8!s0c3riq9yj3ue!86edy$gtf!!_*x'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'auapp.pythonanywhere.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'tnapp.pythonanywhere.com']
 
 
 
